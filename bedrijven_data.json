@@ -1,0 +1,245 @@
+{
+  "bedrijven": [],
+  "info": {
+    "Eureka Access Solutions": {
+      "wat": "Levert toegangscontrole- en beveiligingsoplossingen aan bedrijven.",
+      "groot": "Klein gespecialiseerd bedrijf.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - technisch bedrijf met beperkte kantooractiviteit."
+    },
+    "Eurocarbo Benelux B.V.": {
+      "wat": "Handelt in koolstof- en grafietproducten voor industriële toepassingen.",
+      "groot": "Klein gespecialiseerd handelsbedrijf.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - niche technisch handelsbedrijf."
+    },
+    "Eurodecars Automobielhandel B.V.": {
+      "wat": "Verkoopt en handelt in gebruikte en nieuwe auto's via een showroom.",
+      "groot": "Klein autobedrijf.",
+      "dmu": "Eigenaar/vestigingsmanager.",
+      "kans": "Geschat 1-2 printers | Kans: Hoog - autohandel met balie, documenten en kentekenpapieren."
+    },
+    "Eurofins": {
+      "wat": "Biedt laboratoriumtestdiensten aan voor voedsel, milieu en farmaceutische sectoren.",
+      "groot": "Groot internationaal bedrijf (1000+ medewerkers).",
+      "dmu": "Facilitair manager/inkoopmanager.",
+      "kans": "Geschat 5+ printers | Kans: Laag - groot bedrijf met vaste leveranciers en lange besluitvorming."
+    },
+    "Eurofresh b.v.": {
+      "wat": "Distribueert verse groenten, fruit en andere versproducten aan bedrijven.",
+      "groot": "Middelgroot distributiebedrijf.",
+      "dmu": "Directeur/operations manager.",
+      "kans": "Geschat 2-3 printers | Kans: Midden - kantoor en magazijn met documentatiebehoefte."
+    },
+    "Euromaster Nieuwegein Truck": {
+      "wat": "Verzorgt bandenservice en onderhoud voor vrachtwagens en zwaar transport.",
+      "groot": "Klein servicebedrijf (franchisenemer).",
+      "dmu": "Vestigingsmanager.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - werkplaats met beperkte kantooradministratie."
+    },
+    "Euromaster Utrecht": {
+      "wat": "Verzorgt bandenservice en onderhoud voor personenauto's en bedrijfswagens.",
+      "groot": "Klein servicebedrijf (franchisenemer).",
+      "dmu": "Vestigingsmanager.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - balie en werkplaatsadministratie."
+    },
+    "Euromaster Venlo": {
+      "wat": "Verzorgt bandenservice en onderhoud voor personenauto's en bedrijfswagens.",
+      "groot": "Klein servicebedrijf (franchisenemer).",
+      "dmu": "Vestigingsmanager.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - balie en werkplaatsadministratie."
+    },
+    "Euroselect BV": {
+      "wat": "Werving- en selectiebureau gespecialiseerd in het plaatsen van personeel.",
+      "groot": "Klein tot middelgroot uitzend- of recruitmentbedrijf.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 2-3 printers | Kans: Hoog - veel papierwerk voor contracten en kandidaatdossiers."
+    },
+    "Eurosit B.V.": {
+      "wat": "Ontwerpt en produceert ergonomische stoelen en kantoormeubilair.",
+      "groot": "Middelgroot productiebedrijf.",
+      "dmu": "Directeur of facilitair manager.",
+      "kans": "Geschat 2-4 printers | Kans: Midden - kantoor en showroom met printbehoefte."
+    },
+    "Eussifruit": {
+      "wat": "Groothandel in vers fruit en groenten voor de detailhandel en foodservice.",
+      "groot": "Klein tot middelgroot handelsbedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - handelsbedrijf met orders en paklijsten."
+    },
+    "Evagro B.V.": {
+      "wat": "Agrarisch bedrijf actief in teelt of handel van gewassen en agrarische producten.",
+      "groot": "Klein agrarisch bedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Laag - agrarisch bedrijf met beperkte kantooractiviteit."
+    },
+    "Evectra": {
+      "wat": "Elektrotechnisch installatiebedrijf of leverancier van elektrotechnische componenten.",
+      "groot": "Klein gespecialiseerd bedrijf.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - technisch bedrijf met offertes en tekeningen."
+    },
+    "Everest Export | Sinds 1999 dé expert in professio": {
+      "wat": "Exportbedrijf gespecialiseerd in professionele producten, actief sinds 1999.",
+      "groot": "Klein tot middelgroot handelsbedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-3 printers | Kans: Midden - exporthandel met veel documentatie en vrachtbrieven."
+    },
+    "Evergreens": {
+      "wat": "Retailbedrijf of groothandel in planten, bloemen of tuinartikelen.",
+      "groot": "Klein bedrijf.",
+      "dmu": "Eigenaar.",
+      "kans": "Geschat 1 printer | Kans: Laag - kleine winkel met beperkte printbehoefte."
+    },
+    "Everris International B.V.": {
+      "wat": "Produceert en verkoopt meststoffen en plantenverzorgingsproducten wereldwijd (onderdeel ICL).",
+      "groot": "Groot internationaal bedrijf.",
+      "dmu": "Facilitair manager/inkoopafdeling.",
+      "kans": "Geschat 5+ printers | Kans: Laag - groot internationaal bedrijf met vaste leveranciers."
+    },
+    "Evers & Evers Glas": {
+      "wat": "Handelt in en verwerkt glas voor woningbouw, utiliteit en industrie.",
+      "groot": "Klein tot middelgroot ambachtelijk bedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - kantoor met offertes en werkopdrachten."
+    },
+    "Evi Evers - High Performance Psychologe": {
+      "wat": "Biedt psychologische coaching en begeleiding aan professionals en teams.",
+      "groot": "Eenmanszaak.",
+      "dmu": "Eigenaar.",
+      "kans": "Geschat 1 printer | Kans: Laag - eenmanspraktijk met minimale printbehoefte."
+    },
+    "Evidensia Dierenziekenhuis Nieuwegein": {
+      "wat": "Biedt dierengeneeskundige zorg en specialistische behandelingen voor huisdieren.",
+      "groot": "Middelgroot dierenziekenhuis (onderdeel Evidensia-keten).",
+      "dmu": "Praktijkmanager/vestigingsdirecteur.",
+      "kans": "Geschat 2-4 printers | Kans: Hoog - praktijk print veel formulieren, labeltjes en patiëntdossiers."
+    },
+    "Evotech BV": {
+      "wat": "Technisch dienstverlener of productiebedrijf actief in engineering en techniek.",
+      "groot": "Klein tot middelgroot technisch bedrijf.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 2-3 printers | Kans: Midden - technisch kantoor met tekeningen en rapporten."
+    },
+    "Examenadviesburo B.V.": {
+      "wat": "Verzorgt examentrainingen en advies voor rijbewijzen en vaardigheidsdiploma's.",
+      "groot": "Klein opleidingsinstituut.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 1-2 printers | Kans: Hoog - opleiding print lesmateriaal en certificaten."
+    },
+    "Fine Cooking Wereldrestaurant Vianen": {
+      "wat": "Restaurant dat internationale keukens aanbiedt aan gasten in Vianen.",
+      "groot": "Klein horecabedrijf.",
+      "dmu": "Eigenaar/bedrijfsleider.",
+      "kans": "Geschat 1 printer | Kans: Laag - horeca met minimale kantooradministratie."
+    },
+    "Finenzo Roosendaal | Financieel Adviseur Roosendaa": {
+      "wat": "Biedt financieel advies op het gebied van hypotheken, verzekeringen en pensioenen.",
+      "groot": "Klein financieel advieskantoor.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Hoog - financieel kantoor print veel polissen en adviesdocumenten."
+    },
+    "Finishing Touch Foliedruk BV": {
+      "wat": "Gespecialiseerd in foliedruk en afwerkingstechnieken voor drukwerk en verpakkingen.",
+      "groot": "Klein gespecialiseerd productiebedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - kantoorprinters naast productiemachines."
+    },
+    "Finovion administratiekantoor Oosterhout": {
+      "wat": "Verzorgt administratie, boekhouding en belastingadvies voor MKB-ondernemers.",
+      "groot": "Klein administratiekantoor.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Hoog - administratiekantoor print veel financiële documenten."
+    },
+    "Finset": {
+      "wat": "Financieel dienstverlener of IT-bedrijf actief in de regio Venlo.",
+      "groot": "Klein bedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden."
+    },
+    "FIT2GO Vianen": {
+      "wat": "Biedt personal training en groepslessen aan op locatie of in eigen studio.",
+      "groot": "Kleine sportschool/eenmanszaak.",
+      "dmu": "Eigenaar.",
+      "kans": "Geschat 1 printer | Kans: Laag - kleine fitnessonderneming met minimale printbehoefte."
+    },
+    "Fitness Seller": {
+      "wat": "Verkoopt fitnessapparatuur en sportartikelen aan particulieren en bedrijven.",
+      "groot": "Klein tot middelgroot retailbedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - retail met backoffice en magazijnadministratie."
+    },
+    "Fleetshield B.V.": {
+      "wat": "Levert beschermende folies en lakkering voor voertuigvloten en lease-auto's.",
+      "groot": "Klein gespecialiseerd bedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - werkplaats met werkbonnen en offerteadministratie."
+    },
+    "Flexmodulair": {
+      "wat": "Levert en plaatst modulaire en verplaatsbare bouwoplossingen voor bedrijven.",
+      "groot": "Klein tot middelgroot bouwbedrijf.",
+      "dmu": "Directeur/projectmanager.",
+      "kans": "Geschat 2-3 printers | Kans: Midden - bouwbedrijf met tekeningen en projectdocumentatie."
+    },
+    "Goodyear (Nederland) B.V.": {
+      "wat": "Produceert en verkoopt banden voor personenauto's, vrachtwagens en industrie.",
+      "groot": "Groot internationaal bedrijf (500+ medewerkers).",
+      "dmu": "Facilitair manager/inkoopafdeling.",
+      "kans": "Geschat 5+ printers | Kans: Laag - groot bedrijf met vaste leveranciers en lange besluitvorming."
+    },
+    "Goos Horeca - Venlo": {
+      "wat": "Levert horecabenodigdheden en groothandelsproducten aan horecaondernemers.",
+      "groot": "Klein tot middelgroot horecagroothandelsbedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - kantoor en magazijn met bestellingen en facturen."
+    },
+    "Gooskens Hout Helmond (MEVO Houtindustrie)": {
+      "wat": "Verwerkt en verkoopt hout en plaatmaterialen voor bouw en industrie.",
+      "groot": "Middelgroot productiebedrijf.",
+      "dmu": "Directeur/operations manager.",
+      "kans": "Geschat 2-4 printers | Kans: Hoog - houthandel met veel werkopdrachten, pakbonnen en offertes."
+    },
+    "Goossens Riooltechniek BV Joop": {
+      "wat": "Verzorgt rioolreiniging, inspectie en reparatie voor gemeenten en bedrijven.",
+      "groot": "Klein technisch dienstverlener.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - werkbonnen en inspectierapportages."
+    },
+    "Goossens wonen en slapen - Servicekantoor": {
+      "wat": "Servicekantoor van de Goossens meubelketen voor administratie en ondersteuning.",
+      "groot": "Middelgroot retailbedrijf (onderdeel grotere keten).",
+      "dmu": "Facilitair manager/vestigingsdirecteur.",
+      "kans": "Geschat 3-5 printers | Kans: Hoog - servicekantoor met veel administratief printwerk."
+    },
+    "Gore Heerlen B.V.": {
+      "wat": "Onderdeel van W.L. Gore & Associates, producent van GORE-TEX en technische materialen.",
+      "groot": "Groot internationaal productiebedrijf (500+ medewerkers).",
+      "dmu": "Facilitair manager/inkoopafdeling.",
+      "kans": "Geschat 5+ printers | Kans: Laag - groot bedrijf met centrale inkoop en vaste leveranciers."
+    },
+    "Gorisse Bouw B.V.": {
+      "wat": "Uitvoerend bouwbedrijf actief in woning- en utiliteitsbouw in Noord-Brabant.",
+      "groot": "Klein tot middelgroot bouwbedrijf.",
+      "dmu": "Directeur/eigenaar.",
+      "kans": "Geschat 2-3 printers | Kans: Midden - bouwkantoor met tekeningen, bestekken en werkbonnen."
+    },
+    "GO-tech NUTH": {
+      "wat": "Technisch installatiebedrijf of dienstverlener actief in de regio Nuth.",
+      "groot": "Klein technisch bedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Midden - technisch kantoor met werkopdrachten en offertes."
+    },
+    "Gozi": {
+      "wat": "Software- of technologiebedrijf actief in digitale dienstverlening.",
+      "groot": "Klein bedrijf.",
+      "dmu": "Eigenaar/directeur.",
+      "kans": "Geschat 1-2 printers | Kans: Laag - software bedrijf met lage printbehoefte."
+    },
+    "Grako Logistics B.V.": {
+      "wat": "Verzorgt logistieke diensten en transport voor bedrijven in de regio Nederweert.",
+      "groot": "Klein tot middelgroot logistiek bedrijf.",
+      "dmu": "Directeur/operations manager.",
+      "kans": "Geschat 2-4 printers | Kans: Hoog - logistiek bedrijf met vrachtbrieven, pakbonnen en administratie."
+    }
+  }
+}

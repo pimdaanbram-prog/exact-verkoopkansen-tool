@@ -1,0 +1,10 @@
+browser_sessie/
+_python/
+_browsers/
+build/
+dist/
+__pycache__/
+*.spec
+.DS_Store
+*.pyc
+debug_*.png
