@@ -41,30 +41,45 @@ if not exist "_py.zip" (
 :: ── Stap 2: Python uitpakken ──────────────────────────────────────────────
 echo  [2/5] Python installeren...
 mkdir "%PYTHON_DIR%" 2>nul
+mkdir "%PYTHON_DIR%\Lib\site-packages" 2>nul
 powershell -NoProfile -Command "Expand-Archive -Path '_py.zip' -DestinationPath '%PYTHON_DIR%' -Force"
 del "_py.zip"
 
-:: Site-packages inschakelen (nodig voor pip)
+:: Site-packages inschakelen (nodig voor pip) + pad toevoegen
 for %%f in ("%PYTHON_DIR%\python*._pth") do (
     powershell -NoProfile -Command ^
       "(Get-Content '%%f') -replace '#import site','import site' | Set-Content '%%f'"
+    powershell -NoProfile -Command ^
+      "Add-Content '%%f' 'Lib\site-packages'"
 )
 
 :: ── Stap 3: pip installeren ───────────────────────────────────────────────
 echo  [3/5] pip installeren...
 powershell -NoProfile -Command ^
   "& {[Net.ServicePointManager]::SecurityProtocol='Tls12'; Invoke-WebRequest -Uri 'https://bootstrap.pypa.io/get-pip.py' -OutFile '_pip.py'}"
-"%PYTHON_EXE%" _pip.py --quiet
+if not exist "_pip.py" (
+    echo  FOUT: pip download mislukt.
+    pause & exit /b 1
+)
+"%PYTHON_EXE%" _pip.py --quiet --no-warn-script-location
 del "_pip.py"
 
 :: ── Stap 4: Python packages ───────────────────────────────────────────────
 echo  [4/5] Packages installeren (flask, playwright)...
-"%PYTHON_EXE%" -m pip install flask playwright --quiet
+"%PYTHON_EXE%" -m pip install flask playwright --no-user --quiet --no-warn-script-location
+if errorlevel 1 (
+    echo  FOUT: packages installeren mislukt.
+    pause & exit /b 1
+)
 
 :: ── Stap 5: Chromium browser ──────────────────────────────────────────────
 echo  [5/5] Browser installeren (ca. 150 MB)...
 set PLAYWRIGHT_BROWSERS_PATH=%BROWSERS_DIR%
 "%PYTHON_EXE%" -m playwright install chromium
+if errorlevel 1 (
+    echo  FOUT: browser installeren mislukt.
+    pause & exit /b 1
+)
 
 echo.
 echo  ╔══════════════════════════════════════════════════╗
