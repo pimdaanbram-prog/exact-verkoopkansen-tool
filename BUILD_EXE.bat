@@ -10,22 +10,56 @@ if not exist "%PYTHON_EXE%" (
     exit /b 1
 )
 
-echo.
-echo PyInstaller installeren...
-"%PYTHON_EXE%" -m pip install pyinstaller --no-user --quiet --no-warn-script-location
+if not exist "app.py" (
+    echo FOUT: app.py niet gevonden. Zorg dat je in de juiste map zit.
+    pause
+    exit /b 1
+)
 
-echo EXE bouwen (1-2 minuten)...
-"%PYTHON_EXE%" -m PyInstaller --noconfirm --windowed --onedir --name "ExactTool" --collect-data flask --add-data "bedrijven_data.json;." app.py
+if not exist "bedrijven_data.json" (
+    echo FOUT: bedrijven_data.json niet gevonden.
+    pause
+    exit /b 1
+)
+
+echo.
+echo Stap 1/2: PyInstaller installeren...
+"%PYTHON_EXE%" -m pip install pyinstaller --no-user --quiet --no-warn-script-location
+if errorlevel 1 (
+    echo FOUT: PyInstaller installeren mislukt.
+    pause
+    exit /b 1
+)
+
+echo Stap 2/2: EXE bouwen (2-4 minuten)...
+echo.
+"%PYTHON_EXE%" -m PyInstaller ^
+    --noconfirm ^
+    --console ^
+    --onedir ^
+    --name "ExactTool" ^
+    --hidden-import flask ^
+    --hidden-import werkzeug ^
+    --hidden-import jinja2 ^
+    --hidden-import click ^
+    --hidden-import playwright ^
+    --add-data "bedrijven_data.json;." ^
+    app.py
 
 echo.
 if exist "dist\ExactTool\ExactTool.exe" (
     echo ================================================
-    echo  EXE gebouwd!
-    echo  Te vinden in: dist\ExactTool\ExactTool.exe
-    echo  Kopieer de hele map dist\ExactTool\
+    echo  Gelukt!
+    echo  Dubbelklik: dist\ExactTool\ExactTool.exe
+    echo  Kopieer de hele map dist\ExactTool\ mee.
     echo ================================================
+    echo.
+    explorer dist\ExactTool
 ) else (
-    echo Bouwen mislukt. Zie foutmeldingen hierboven.
+    echo ================================================
+    echo  MISLUKT - geen exe gevonden.
+    echo  Scroll omhoog voor de foutmelding van PyInstaller.
+    echo ================================================
 )
 echo.
 pause
