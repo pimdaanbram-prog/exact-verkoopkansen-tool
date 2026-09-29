@@ -57,9 +57,13 @@ VERWERKT_FILE = os.path.join(DATA_DIR, 'verwerkt.json')
 BASE_URL      = 'https://start.exactonline.nl'
 PORT          = 5050
 
-# Windows: browsers staan in _browsers naast de app. Mac: standaard Playwright-map.
+# Windows: browsers staan in _browsers naast de app. Mac: standaard Playwright-map
+# (~/Library/Caches/ms-playwright). PyInstaller zet deze variabele zelf op '0'
+# (= browser ín de app zoeken), dat overschrijven we hier bewust.
 if os.path.isdir(BROWSERS_DIR):
-    os.environ.setdefault('PLAYWRIGHT_BROWSERS_PATH', BROWSERS_DIR)
+    os.environ['PLAYWRIGHT_BROWSERS_PATH'] = BROWSERS_DIR
+elif getattr(sys, 'frozen', False):
+    os.environ.pop('PLAYWRIGHT_BROWSERS_PATH', None)
 
 app   = Flask(__name__)
 state = {
@@ -585,18 +589,38 @@ def volledige_url(url):
     return BASE_URL + '/docs/' + url
 
 
-def launch_context(pw):
-    """Start Chromium met de bewaarde sessie. Valt terug op Google Chrome als de
-    meegeleverde Chromium ontbreekt (handig op de Mac)."""
+def installeer_chromium():
+    """Installeert de Chromium die bij deze Playwright-versie hoort (eenmalig, ca. 150 MB)."""
+    import subprocess
+    from playwright._impl._driver import compute_driver_executable, get_driver_env
+    driver = compute_driver_executable()
+    cmd = list(driver) if isinstance(driver, (tuple, list)) else [str(driver)]
+    r = subprocess.run(cmd + ['install', 'chromium'], env=get_driver_env(),
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError((r.stderr or r.stdout or 'onbekende fout').strip()[-500:])
+
+
+async def launch_context(pw):
+    """Start Chromium met de bewaarde sessie. Ontbreekt Chromium, dan wordt hij
+    automatisch geïnstalleerd; lukt dat niet, dan wordt Google Chrome gebruikt."""
     opts = dict(headless=False, viewport={'width': 1300, 'height': 850},
                 args=['--disable-background-timer-throttling',
                       '--disable-renderer-backgrounding',
                       '--disable-backgrounding-occluded-windows'])
     try:
-        return pw.chromium.launch_persistent_context(SESSIE, **opts)
+        return await pw.chromium.launch_persistent_context(SESSIE, **opts)
     except Exception as e:
-        log(f'Meegeleverde Chromium niet gevonden ({str(e).splitlines()[0][:80]}), probeer Google Chrome...')
-        return pw.chromium.launch_persistent_context(SESSIE, channel='chrome', **opts)
+        if "Executable doesn't exist" not in str(e):
+            raise
+    log('Chromium ontbreekt - wordt nu automatisch geïnstalleerd (eenmalig, 1-2 minuten)...')
+    try:
+        await asyncio.to_thread(installeer_chromium)
+        log('Chromium geïnstalleerd.')
+        return await pw.chromium.launch_persistent_context(SESSIE, **opts)
+    except Exception as e:
+        log(f'Chromium installeren/starten lukte niet ({str(e).splitlines()[0][:150]}), probeer Google Chrome...')
+    return await pw.chromium.launch_persistent_context(SESSIE, channel='chrome', **opts)
 
 
 def browser_worker():
