@@ -8,3 +8,7 @@ __pycache__/
 .DS_Store
 *.pyc
 debug_*.png
+.venv/
+logs/
+verwerkt.json
+app_uitvoer.log
