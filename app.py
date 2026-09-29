@@ -63,7 +63,13 @@ PORT          = 5050
 if os.path.isdir(BROWSERS_DIR):
     os.environ['PLAYWRIGHT_BROWSERS_PATH'] = BROWSERS_DIR
 elif getattr(sys, 'frozen', False):
-    os.environ.pop('PLAYWRIGHT_BROWSERS_PATH', None)
+    if sys.platform == 'darwin':
+        _pw = os.path.join(os.path.expanduser('~'), 'Library', 'Caches', 'ms-playwright')
+    elif sys.platform == 'win32':
+        _pw = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'ms-playwright')
+    else:
+        _pw = os.path.join(os.path.expanduser('~'), '.cache', 'ms-playwright')
+    os.environ['PLAYWRIGHT_BROWSERS_PATH'] = _pw
 
 app   = Flask(__name__)
 state = {
@@ -242,6 +248,12 @@ PAGE = r"""<!DOCTYPE html>
   </div>
 
   <div>
+    <div class="card-label">🏷️ &nbsp;Fase-code</div>
+    <input type="text" id="fase" value="VB" style="width:140px">
+    <div class="hint">De code van de verkoopkansfase zoals die in deze administratie heet (standaard VB = Voorbereid).</div>
+  </div>
+
+  <div>
     <div class="card-label">⚡ &nbsp;Aantal vensters tegelijk</div>
     <select id="vensters" style="width:auto;min-width:90px">{% for n in range(1,11) %}<option{% if n==8 %} selected{% endif %}>{{n}}</option>{% endfor %}</select>
     <div class="hint">Meer vensters = sneller. 8 vensters doet ca. 50 klanten in 1-2 minuten.</div>
@@ -366,6 +378,7 @@ function starten(){
     maand: document.getElementById('maand').value,
     jaar:  document.getElementById('jaar').value,
     rmcode: document.getElementById('rmcode').value.trim(),
+    fase: document.getElementById('fase').value.trim(),
     overslaan: document.getElementById('overslaan').checked,
     vensters: document.getElementById('vensters').value,
   };
@@ -553,6 +566,33 @@ JS_ZOEK_OPSLAAN = r"""
 }
 """
 
+# Is de getypte fasecode door Exact herkend? (verborgen ID gevuld of omschrijving verschenen)
+JS_FASE_HERKEND = r"""
+el => {
+  const box = el.closest('td') || el.parentElement;
+  if (!box) return false;
+  for (const h of box.querySelectorAll('input[type=hidden]')) {
+    if (h.value && h.value.trim() && h.value.trim().toUpperCase() !== el.value.trim().toUpperCase()) return true;
+  }
+  // omschrijving naast het veld (zelfde cel of de cel erna), niet het label ervoor
+  for (const cel of [box, box.nextElementSibling]) {
+    if (!cel) continue;
+    for (const d of cel.querySelectorAll('[id$="_alt"], [id$="_Description"], [id$="Description"], .BrowseDescription, span')) {
+      if (d !== el && (d.innerText || '').trim().length > 1 && !d.querySelector('input')) return true;
+    }
+  }
+  return false;
+}
+"""
+
+JS_FASE_INFO = r"""
+el => {
+  const box = el.closest('tr') || el.parentElement;
+  const h = [...box.querySelectorAll('input')].map(i => (i.id||i.name) + '=' + (i.type) + ':' + (i.value||'').slice(0,20));
+  return 'veld ' + (el.id||el.name) + ' waarde "' + el.value + '"; ' + h.join(', ');
+}
+"""
+
 # Verzamelt zichtbare foutmeldingen op de pagina.
 JS_FOUTEN = r"""
 () => {
@@ -674,6 +714,7 @@ async def browser_main():
 async def run_batch(ctx, hoofd, cmd):
     titel, dag, maand, jaar = cmd['titel'], cmd['dag'], cmd['maand'], cmd['jaar']
     rmcode    = (cmd.get('rmcode') or '').strip()
+    fase      = (cmd.get('fase') or 'VB').strip() or 'VB'
     overslaan = cmd.get('overslaan', True)
     try:    n_vensters = max(1, min(10, int(cmd.get('vensters') or 6)))
     except: n_vensters = 6
@@ -745,14 +786,17 @@ async def run_batch(ctx, hoofd, cmd):
     async def get_bedrijven(frame):
         return await frame.evaluate(r"""() => {
           const out = [], gezien = new Set();
+          const actie = /^(bewerken|wijzigen|edit|verwijderen|bekijken|openen|kopi[eë]ren|selecteren)$/i;
+          const sleutel = h => { const m = h.match(/AccountID=([^&]+)/i); return m ? m[1].toLowerCase() : h; };
           let rijen = document.querySelectorAll('tr.DataDark, tr.DataLight');
           if (!rijen.length) rijen = document.querySelectorAll('tr');
           for (const rij of rijen) {
             if ((rij.id||'').includes('crit') || (rij.className||'').includes('Header')) continue;
             for (const a of rij.querySelectorAll('a')) {
               const href = a.getAttribute('href') || '', t = (a.innerText||'').trim();
-              if (t.length > 2 && (href.includes('AccountID') || href.includes('CRMAccount'))) {
-                if (!gezien.has(href)) { gezien.add(href); out.push({naam: t, url: href}); }
+              if (t.length > 2 && !actie.test(t) && (href.includes('AccountID') || href.includes('CRMAccount'))) {
+                const k = sleutel(href);
+                if (!gezien.has(k)) { gezien.add(k); out.push({naam: t, url: href}); }
                 break;
               }
             }
@@ -827,15 +871,25 @@ async def run_batch(ctx, hoofd, cmd):
         if el: await el.fill(titel)
         else:  log(f'  {bedrijf["naam"]}: WAARSCHUWING veld Omschrijving niet gevonden')
 
-        # 2. Fase = VB
-        el = await veld(ff, ['Fase'], 'fase', 1)
+        # 2. Fase (bijv. VB). GEEN Enter: dat verstuurt het formulier voordat de fase herkend is.
+        el = await veld(ff, ['Fase', 'Verkoopkans fase', 'Verkoopkansfase'], 'fase', 1)
         if el:
             await el.click(); await el.fill('')
-            await el.press_sequentially('VB', delay=20)
-            await asyncio.sleep(0.3)
-            await el.press('Enter')
-            await asyncio.sleep(0.3)
+            await el.press_sequentially(fase, delay=40)
+            await asyncio.sleep(0.6)
+            await el.press('Tab')
+            herkend = False
+            for _ in range(25):          # max ~5 sec wachten op Exact
+                await asyncio.sleep(0.2)
+                try: herkend = await el.evaluate(JS_FASE_HERKEND)
+                except: herkend = False
+                if herkend: break
             await wacht_op_laden(ff, 5000)
+            if not herkend:
+                info = ''
+                try: info = await el.evaluate(JS_FASE_INFO)
+                except: pass
+                log(f'  {bedrijf["naam"]}: WAARSCHUWING fase "{fase}" niet (zeker) herkend door Exact [{info}]')
         else: log(f'  {bedrijf["naam"]}: WAARSCHUWING veld Fase niet gevonden')
 
         # 3. Sluitingsdatum
@@ -995,9 +1049,18 @@ async def run_batch(ctx, hoofd, cmd):
 
         if not werk.empty():
             eerste = await nieuwe_pagina()
-            await verwerk(eerste, werk.get_nowait())
-            extra = [await nieuwe_pagina() for _ in range(min(n_vensters, werk.qsize()) - 1)]
-            await asyncio.gather(*(worker(p) for p in [eerste] + extra))
+            # Proefdraaien met 1 venster: pas als dat lukt gaan de andere vensters open.
+            for poging in range(2):
+                if werk.empty() or state['stop']: break
+                voor = geslaagd
+                await verwerk(eerste, werk.get_nowait())
+                if geslaagd > voor: break
+            if geslaagd == 0 and not werk.empty():
+                log('De eerste bedrijven mislukten - gestopt zodat niet de hele lijst mislukt.')
+                log('Kijk in de map logs naar de screenshot/.html van de mislukte bedrijven.')
+            else:
+                extra = [await nieuwe_pagina() for _ in range(min(n_vensters, werk.qsize() + 1) - 1)]
+                await asyncio.gather(*(worker(p) for p in [eerste] + extra))
 
         if state['stop']: log('Gestopt door gebruiker.')
         duur = time.time() - t_start
